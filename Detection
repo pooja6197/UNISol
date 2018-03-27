@@ -1,0 +1,22 @@
+i1=rgb2gray(imread('MissionFirstTactical3.tif'));
+i2=rgb2gray(imread('ax.jpg'));
+imshow(i1);
+imshow(i2);
+points1 = detectHarrisFeatures(i1);
+points2 = detectHarrisFeatures(i2);
+[features1,valid_points1] = extractFeatures(i1,points1);
+[features2,valid_points2] = extractFeatures(i2,points2);
+indexPairs = matchFeatures(features1,features2);
+if(indexPairs)
+       {
+        msgbox('same');
+    }
+else 
+    {
+          msgbox('not same');
+    }
+end
+matchedPoints1 = valid_points1(indexPairs(:,1),:);
+matchedPoints2 = valid_points2(indexPairs(:,2),:);
+figure; 
+showMatchedFeatures(i1,i2,matchedPoints1,matchedPoints2);
